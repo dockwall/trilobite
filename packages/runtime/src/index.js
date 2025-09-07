@@ -1,0 +1,1 @@
+console.log('This will be soon a frontend framework!')

@@ -1,0 +1,17 @@
+{
+  "name": "trilobite-project",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve:examples": "npx http-server . -o ./examples"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "A project to learn how to write a frontend framework (and how they work)",
+  "private": true,
+  "workspaces": [
+    "packages/runtime"
+  ]
+}

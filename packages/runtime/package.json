@@ -1,0 +1,32 @@
+{
+  "name": "trilobite",
+  "version": "1.0.1",
+  "main": "dist/trilobite.js",
+  "files": [
+    "dist/trilobite.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dockwall/trilobite.git",
+    "directory": "packages/runtime"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepack": "npm run build",
+    "build": "rollup -c",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "eslint": "^9.35.0",
+    "globals": "^16.3.0",
+    "rollup": "^4.50.0",
+    "rollup-plugin-cleanup": "^3.2.1",
+    "rollup-plugin-filesize": "^10.0.0"
+  }
+}
