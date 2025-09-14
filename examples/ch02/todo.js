@@ -7,7 +7,19 @@ const addTodoInput = document.getElementById("todo-input");
 const addTodoButton = document.getElementById("add-todo-btn");
 const todoList = document.getElementById("todo-list");
 
+function isTodoExists(description) {
+  const preparedState = todoState.map(({ description }) =>
+    description.trim().toLowerCase()
+  );
+  return preparedState.includes(description.trim().toLowerCase());
+}
+
 function addTodo() {
+  if (isTodoExists(addTodoInput.value)) {
+    alert("This todo already exists!");
+    return;
+  }
+
   const newTodo = { description: addTodoInput.value, isDone: false };
 
   todoState.push(newTodo);
