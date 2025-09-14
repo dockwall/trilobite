@@ -16,11 +16,19 @@ label.todo-input-label {
   margin-bottom: 0.25em;
 }
 
-button,
-input {
+button#add-todo-btn,
+input#todo-input {
   font-family: inherit;
   padding: 0.25em 0.5em;
   font-size: 1rem;
+}
+
+button#add-todo-btn:disabled {
+  transition: color 0.5s ease-out;
+}
+
+button#add-todo-btn:enabled {
+  transition: color 0.5s ease-out;
 }
 
 input#todo-input {
