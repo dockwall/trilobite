@@ -15,8 +15,10 @@ function addTodo() {
 }
 
 function removeTodo(i) {
-  todoState.splice(i, 1);
-  todoList.childNodes[i].remove();
+  todoList.replaceChild(
+    renderTodoInDoneMode(todoState[i]),
+    todoList.childNodes[i]
+  );
 }
 
 function updateTodo(i, newTodoName) {
@@ -83,6 +85,18 @@ function renderTodoInReadMode(todoName) {
     removeTodo(i);
   });
   todoElementLi.append(todoElementButton);
+
+  return todoElementLi;
+}
+
+function renderTodoInDoneMode(todoName) {
+  const todoElementLi = document.createElement("li");
+  const todoElementSpan = document.createElement("span");
+  const todoElementStriketrough = document.createElement("s");
+
+  todoElementStriketrough.textContent = todoName;
+  todoElementSpan.append(todoElementStriketrough);
+  todoElementLi.append(todoElementSpan);
 
   return todoElementLi;
 }
