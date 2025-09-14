@@ -1,48 +1,53 @@
-const todoState = ["Develop another yet TODO app", "Create my own framework"];
+const todoState = [
+  { description: "Develop another yet TODO app", isDone: false },
+  { description: "Create my own framework", isDone: false },
+];
 
 const addTodoInput = document.getElementById("todo-input");
 const addTodoButton = document.getElementById("add-todo-btn");
 const todoList = document.getElementById("todo-list");
 
 function addTodo() {
-  const todoName = addTodoInput.value;
+  const newTodo = { description: addTodoInput.value, isDone: false };
 
-  todoState.push(todoName);
-  todoList.append(renderTodoInReadMode(todoName));
+  todoState.push(newTodo);
+  todoList.append(renderTodoInReadMode(newTodo));
 
   addTodoInput.value = "";
   addTodoButton.disabled = true;
 }
 
 function removeTodo(i) {
+  todoState[i].isDone = true;
+
   todoList.replaceChild(
-    renderTodoInDoneMode(todoState[i]),
+    renderTodoInReadMode(todoState[i]),
     todoList.childNodes[i]
   );
 }
 
 function updateTodo(i, newTodoName) {
-  todoState[i] = newTodoName;
+  todoState[i].description = newTodoName;
 
   todoList.replaceChild(
-    renderTodoInReadMode(newTodoName),
+    renderTodoInReadMode(todoState[i]),
     todoList.childNodes[i]
   );
 }
 
-function renderTodoInEditMode(todoName) {
+function renderTodoInEditMode(todo) {
   const todoElementLi = document.createElement("li");
   const todoElementInput = document.createElement("input");
   const todoElementSaveButton = document.createElement("button");
   const todoElementCancelButton = document.createElement("button");
 
   todoElementInput.type = "text";
-  todoElementInput.value = todoName;
+  todoElementInput.value = todo.description;
   todoElementLi.append(todoElementInput);
 
   todoElementSaveButton.textContent = "Save";
   todoElementSaveButton.addEventListener("click", () => {
-    const i = todoState.indexOf(todoName);
+    const i = todoState.indexOf(todo);
 
     updateTodo(i, todoElementInput.value);
   });
@@ -50,53 +55,43 @@ function renderTodoInEditMode(todoName) {
 
   todoElementCancelButton.textContent = "Cancel";
   todoElementCancelButton.addEventListener("click", () => {
-    const i = todoState.indexOf(todoName);
+    const i = todoState.indexOf(todo);
 
-    todoList.replaceChild(
-      renderTodoInReadMode(todoName),
-      todoList.childNodes[i]
-    );
+    todoList.replaceChild(renderTodoInReadMode(todo), todoList.childNodes[i]);
   });
   todoElementLi.append(todoElementCancelButton);
 
   return todoElementLi;
 }
 
-function renderTodoInReadMode(todoName) {
+function renderTodoInReadMode(todo) {
   const todoElementLi = document.createElement("li");
   const todoElementSpan = document.createElement("span");
-  const todoElementButton = document.createElement("button");
 
-  todoElementSpan.textContent = todoName;
-  todoElementSpan.addEventListener("dblclick", () => {
-    const i = todoState.indexOf(todoName);
+  todoElementSpan.textContent = todo.description;
 
-    todoList.replaceChild(
-      renderTodoInEditMode(todoName),
-      todoList.childNodes[i]
-    );
-  });
+  if (todo.isDone) {
+    todoElementSpan.classList.add("done");
+  } else {
+    todoElementSpan.addEventListener("dblclick", () => {
+      const i = todoState.indexOf(todo);
+
+      todoList.replaceChild(renderTodoInEditMode(todo), todoList.childNodes[i]);
+    });
+  }
   todoElementLi.append(todoElementSpan);
 
-  todoElementButton.textContent = "Done";
-  todoElementButton.addEventListener("click", () => {
-    const i = todoState.indexOf(todoName);
+  if (!todo.isDone) {
+    const todoElementButton = document.createElement("button");
 
-    removeTodo(i);
-  });
-  todoElementLi.append(todoElementButton);
+    todoElementButton.textContent = "Done";
+    todoElementButton.addEventListener("click", () => {
+      const i = todoState.indexOf(todo);
 
-  return todoElementLi;
-}
-
-function renderTodoInDoneMode(todoName) {
-  const todoElementLi = document.createElement("li");
-  const todoElementSpan = document.createElement("span");
-  const todoElementStriketrough = document.createElement("s");
-
-  todoElementStriketrough.textContent = todoName;
-  todoElementSpan.append(todoElementStriketrough);
-  todoElementLi.append(todoElementSpan);
+      removeTodo(i);
+    });
+    todoElementLi.append(todoElementButton);
+  }
 
   return todoElementLi;
 }

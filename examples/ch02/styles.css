@@ -34,3 +34,7 @@ button#add-todo-btn:enabled {
 input#todo-input {
   margin-right: 4px;
 }
+
+.done {
+  text-decoration: line-through;
+}
