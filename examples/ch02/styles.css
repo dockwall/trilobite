@@ -31,10 +31,21 @@ button#add-todo-btn:enabled {
   transition: color 0.5s ease-out;
 }
 
+button.save,
+button.cancel,
+button.edit,
+button.done-button {
+  margin-left: 4px;
+}
+
 input#todo-input {
   margin-right: 4px;
 }
 
-.done {
+li:not(:first-child) {
+  margin-top: 8px;
+}
+
+.done-todo {
   text-decoration: line-through;
 }

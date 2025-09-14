@@ -7,6 +7,11 @@ const addTodoInput = document.getElementById("todo-input");
 const addTodoButton = document.getElementById("add-todo-btn");
 const todoList = document.getElementById("todo-list");
 
+function readTodo(description) {
+  const message = new SpeechSynthesisUtterance(description);
+  speechSynthesis.speak(message);
+}
+
 function isTodoExists(description) {
   const preparedState = todoState.map(({ description }) =>
     description.trim().toLowerCase()
@@ -27,6 +32,8 @@ function addTodo() {
 
   addTodoInput.value = "";
   addTodoButton.disabled = true;
+
+  readTodo(newTodo.description);
 }
 
 function removeTodo(i) {
@@ -58,6 +65,7 @@ function renderTodoInEditMode(todo) {
   todoElementLi.append(todoElementInput);
 
   todoElementSaveButton.textContent = "Save";
+  todoElementSaveButton.classList.add("save");
   todoElementSaveButton.addEventListener("click", () => {
     const i = todoState.indexOf(todo);
 
@@ -66,6 +74,8 @@ function renderTodoInEditMode(todo) {
   todoElementLi.append(todoElementSaveButton);
 
   todoElementCancelButton.textContent = "Cancel";
+  todoElementCancelButton.classList.add("cancel");
+
   todoElementCancelButton.addEventListener("click", () => {
     const i = todoState.indexOf(todo);
 
@@ -83,7 +93,7 @@ function renderTodoInReadMode(todo) {
   todoElementSpan.textContent = todo.description;
 
   if (todo.isDone) {
-    todoElementSpan.classList.add("done");
+    todoElementSpan.classList.add("done-todo");
   } else {
     todoElementSpan.addEventListener("dblclick", () => {
       const i = todoState.indexOf(todo);
@@ -97,6 +107,7 @@ function renderTodoInReadMode(todo) {
     const todoElementButton = document.createElement("button");
 
     todoElementButton.textContent = "Done";
+    todoElementButton.classList.add("done-button");
     todoElementButton.addEventListener("click", () => {
       const i = todoState.indexOf(todo);
 
